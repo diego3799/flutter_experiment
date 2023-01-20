@@ -15,10 +15,10 @@ void main() async {
   return runApp(const MyApp());
 }
 
-final _router = GoRouter(initialLocation: SigninScreen.path, routes: [
+final _router = GoRouter(initialLocation: LoadingScreen.path, routes: [
   GoRoute(
     path: LoadingScreen.path,
-    builder: (context, state) => LoadingScreen(),
+    builder: (context, state) => const LoadingScreen(),
   ),
   GoRoute(
     path: SignupScreen.path,

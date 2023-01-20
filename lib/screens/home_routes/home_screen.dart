@@ -7,6 +7,6 @@ class HomeScreen extends StatelessWidget {
   static String path = "/";
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text(context.read<UserProvider>().jwt));
+    return Center(child: Text(context.read<UserProvider>().jwt ?? "no jwt"));
   }
 }
