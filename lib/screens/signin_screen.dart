@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fun_experiment/screens/signup_screen.dart';
 import 'package:fun_experiment/utils/form_utils.dart';
+import 'package:fun_experiment/utils/env_vars.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
+import 'package:toasta/toasta.dart';
 
 class SigninScreen extends StatefulWidget {
   static String path = "/signin";
@@ -14,6 +20,49 @@ class SigninScreen extends StatefulWidget {
 class _SigninScreenState extends State<SigninScreen> {
   final _formKey = GlobalKey<FormState>();
 
+  void login(BuildContext context) async {
+    setState(() {
+      loading = true;
+    });
+    try {
+      var url = Uri.http(backendUrl, "/api/users/signin");
+
+      var response = await http.post(url, body: {
+        "email": email,
+        "password": password,
+      });
+
+      var body = jsonDecode(response.body);
+      if (!body["success"]) {
+        final toast = Toast(
+            title: Expanded(
+              child: const Text(
+                "Error",
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            fadeInSubtitle: false,
+            subtitle: body["message"],
+            status: ToastStatus.failed);
+        Toasta(context).toast(toast);
+      }
+      print("body -> ${body["success"]}");
+    } catch (e) {
+      final toast = Toast(
+          title: "Error",
+          subtitle: "There was an unexpected error",
+          status: ToastStatus.failed);
+      Toasta(context).toast(toast);
+    } finally {
+      setState(() {
+        loading = false;
+      });
+    }
+  }
+
+  bool loading = false;
   bool hidePassword = true;
   String email = "";
   String password = "";
@@ -80,13 +129,19 @@ class _SigninScreenState extends State<SigninScreen> {
               height: 20,
             ),
             ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    print("Form validated");
-                    print("$email $password");
-                  }
-                },
-                child: const Text("Login")),
+                onPressed: loading
+                    ? null
+                    : () {
+                        if (_formKey.currentState!.validate()) {
+                          login(context);
+                        }
+                      },
+                child: loading
+                    ? const SpinKitCircle(
+                        color: Colors.white,
+                        size: 20,
+                      )
+                    : const Text("Login")),
             const SizedBox(
               height: 20,
             ),

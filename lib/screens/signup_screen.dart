@@ -18,6 +18,8 @@ class _SignupScreenState extends State<SignupScreen> {
   String email = "";
   String password = "";
   String confirmPassword = "";
+  bool hidePassword = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +35,7 @@ class _SignupScreenState extends State<SignupScreen> {
               style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Form(
@@ -42,7 +44,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 children: [
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "Email",
                     ),
                     onChanged: (value) {
@@ -50,23 +52,49 @@ class _SignupScreenState extends State<SignupScreen> {
                     },
                     validator: emailValidator,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
                     obscureText: true,
-                    decoration: InputDecoration(hintText: "Password"),
+                    decoration: InputDecoration(
+                        hintText: "Password",
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                hidePassword = !hidePassword;
+                              });
+                            },
+                            icon: Icon(
+                              hidePassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.grey[500],
+                            ))),
                     onChanged: (value) {
                       password = value;
                     },
                     validator: notEmptyValidator,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(hintText: "Confirm password"),
+                    obscureText: hidePassword,
+                    decoration: InputDecoration(
+                        hintText: "Confirm password",
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                hidePassword = !hidePassword;
+                              });
+                            },
+                            icon: Icon(
+                              hidePassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.grey[500],
+                            ))),
                     onChanged: (value) {
                       confirmPassword = value;
                     },
@@ -83,7 +111,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(
@@ -93,8 +121,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     print("$email $password $confirmPassword");
                   }
                 },
-                child: Text("Create account")),
-            SizedBox(
+                child: const Text("Create account")),
+            const SizedBox(
               height: 20,
             ),
             GestureDetector(

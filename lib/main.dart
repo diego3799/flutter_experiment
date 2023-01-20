@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fun_experiment/buttomNavigator.dart';
-import 'package:fun_experiment/screens/home_screen.dart';
+import 'package:fun_experiment/screens/home_routes/home_screen.dart';
 import 'package:fun_experiment/screens/loading_screen.dart';
 import 'package:fun_experiment/screens/signin_screen.dart';
 import 'package:fun_experiment/screens/signup_screen.dart';
 import 'package:go_router/go_router.dart';
+import 'package:toasta/toasta.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  await dotenv.load();
+  return runApp(const MyApp());
+}
 
 final _router = GoRouter(initialLocation: SignupScreen.path, routes: [
   GoRoute(
@@ -39,48 +44,50 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: _router,
-      theme: ThemeData.dark().copyWith(
-          inputDecorationTheme: InputDecorationTheme(
-              filled: true,
-              fillColor: Colors.white,
-              alignLabelWithHint: false,
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              hintStyle: TextStyle(
-                  color: Colors.grey[500],
-                  decorationStyle: TextDecorationStyle.solid),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-              ),
-              focusedBorder: OutlineInputBorder(
+    return ToastaContainer(
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: _router,
+        theme: ThemeData.dark().copyWith(
+            inputDecorationTheme: InputDecorationTheme(
+                filled: true,
+                fillColor: Colors.white,
+                alignLabelWithHint: false,
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                hintStyle: TextStyle(
+                    color: Colors.grey[500],
+                    decorationStyle: TextDecorationStyle.solid),
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 2)),
-              errorStyle: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-              ),
-              counterStyle: TextStyle(color: Colors.amber)),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                  textStyle: TextStyle(
-                    fontSize: 16,
-                  ),
-                  shape: StadiumBorder(),
-                  elevation: 10,
-                  padding: EdgeInsets.symmetric(vertical: 20))),
-          textTheme: TextTheme(
-              subtitle1: TextStyle(
-                  color: Colors.black,
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    borderSide: BorderSide(color: Colors.blueAccent, width: 2)),
+                errorStyle: TextStyle(
+                  fontSize: 18,
                   fontWeight: FontWeight.w400,
-                  fontSize: 17),
-              subtitle2: TextStyle(color: Colors.blue[300]),
-              headline1: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ))),
+                ),
+                counterStyle: TextStyle(color: Colors.amber)),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                    textStyle: TextStyle(
+                      fontSize: 16,
+                    ),
+                    shape: StadiumBorder(),
+                    elevation: 10,
+                    padding: EdgeInsets.symmetric(vertical: 20))),
+            textTheme: TextTheme(
+                subtitle1: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 17),
+                subtitle2: TextStyle(color: Colors.blue[300]),
+                headline1: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ))),
+      ),
     );
   }
 }
