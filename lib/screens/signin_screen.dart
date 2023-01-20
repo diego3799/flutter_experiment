@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fun_experiment/provider/user_provider.dart';
 import 'package:fun_experiment/screens/home_routes/home_screen.dart';
 import 'package:fun_experiment/screens/signup_screen.dart';
 import 'package:fun_experiment/utils/form_utils.dart';
@@ -10,6 +11,7 @@ import 'package:fun_experiment/utils/notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:toasta/toasta.dart';
+import 'package:provider/provider.dart';
 
 class SigninScreen extends StatefulWidget {
   static String path = "/signin";
@@ -43,13 +45,14 @@ class _SigninScreenState extends State<SigninScreen> {
         }
       } else {
         if (mounted) {
+          //  Set jwt
+          context.read<UserProvider>().setUserJwt(body["jwt"]);
           setNotification(context,
-              title: "Success", status: ToastStatus.success);
+              title: "Login successful", status: ToastStatus.success);
           context.go(HomeScreen.path);
         }
       }
     } catch (e) {
-      print(e);
       setNotification(context,
           title: "Error",
           subtitle: "There was an unexpected error, try again.",

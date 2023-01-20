@@ -23,6 +23,6 @@ void setNotification(
       ),
       fadeInSubtitle: false,
       subtitle: subtitle,
-      status: ToastStatus.failed);
+      status: status);
   Toasta(context).toast(toast);
 }

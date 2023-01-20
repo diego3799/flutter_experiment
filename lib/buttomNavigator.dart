@@ -18,9 +18,7 @@ class _ButtomNavigatorState extends State<ButtomNavigator> {
       body: widget.child,
       backgroundColor: Colors.grey[200],
       // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
         items: const [
