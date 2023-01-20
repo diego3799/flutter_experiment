@@ -10,8 +10,8 @@ void setNotification(
   final toast = Toast(
       title: Column(
         children: [
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: subtitle == null ? 0 : 10,
           ),
           Text(
             title,
