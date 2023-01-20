@@ -13,7 +13,7 @@ void main() async {
   return runApp(const MyApp());
 }
 
-final _router = GoRouter(initialLocation: SignupScreen.path, routes: [
+final _router = GoRouter(initialLocation: HomeScreen.path, routes: [
   GoRoute(
     path: LoadingScreen.path,
     builder: (context, state) => LoadingScreen(),
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
                 fillColor: Colors.white,
                 alignLabelWithHint: false,
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 hintStyle: TextStyle(
                     color: Colors.grey[500],
                     decorationStyle: TextDecorationStyle.solid),
@@ -63,27 +63,28 @@ class MyApp extends StatelessWidget {
                 ),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
-                    borderSide: BorderSide(color: Colors.blueAccent, width: 2)),
-                errorStyle: TextStyle(
+                    borderSide:
+                        const BorderSide(color: Colors.blueAccent, width: 2)),
+                errorStyle: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                 ),
-                counterStyle: TextStyle(color: Colors.amber)),
+                counterStyle: const TextStyle(color: Colors.amber)),
             elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                       fontSize: 16,
                     ),
-                    shape: StadiumBorder(),
+                    shape: const StadiumBorder(),
                     elevation: 10,
-                    padding: EdgeInsets.symmetric(vertical: 20))),
+                    padding: const EdgeInsets.symmetric(vertical: 20))),
             textTheme: TextTheme(
-                subtitle1: TextStyle(
+                subtitle1: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w400,
                     fontSize: 17),
                 subtitle2: TextStyle(color: Colors.blue[300]),
-                headline1: TextStyle(
+                headline1: const TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
                 ))),

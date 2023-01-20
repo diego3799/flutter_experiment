@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fun_experiment/screens/home_routes/home_screen.dart';
 import 'package:fun_experiment/screens/signup_screen.dart';
 import 'package:fun_experiment/utils/form_utils.dart';
 import 'package:fun_experiment/utils/env_vars.dart';
+import 'package:fun_experiment/utils/notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:toasta/toasta.dart';
@@ -26,35 +28,32 @@ class _SigninScreenState extends State<SigninScreen> {
     });
     try {
       var url = Uri.http(backendUrl, "/api/users/signin");
-
       var response = await http.post(url, body: {
         "email": email,
         "password": password,
       });
 
       var body = jsonDecode(response.body);
-      if (!body["success"]) {
-        final toast = Toast(
-            title: Expanded(
-              child: const Text(
-                "Error",
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            fadeInSubtitle: false,
-            subtitle: body["message"],
-            status: ToastStatus.failed);
-        Toasta(context).toast(toast);
+      if (body["success"] == false) {
+        if (mounted) {
+          setNotification(context,
+              title: "Error",
+              subtitle: body["message"],
+              status: ToastStatus.failed);
+        }
+      } else {
+        if (mounted) {
+          setNotification(context,
+              title: "Success", status: ToastStatus.success);
+          context.go(HomeScreen.path);
+        }
       }
-      print("body -> ${body["success"]}");
     } catch (e) {
-      final toast = Toast(
+      print(e);
+      setNotification(context,
           title: "Error",
-          subtitle: "There was an unexpected error",
+          subtitle: "There was an unexpected error, try again.",
           status: ToastStatus.failed);
-      Toasta(context).toast(toast);
     } finally {
       setState(() {
         loading = false;

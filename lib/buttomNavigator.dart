@@ -14,7 +14,7 @@ class _ButtomNavigatorState extends State<ButtomNavigator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Appbar")),
+      appBar: AppBar(title: const Text("Appbar")),
       body: widget.child,
       backgroundColor: Colors.grey[200],
       // floatingActionButton: FloatingActionButton(
@@ -23,10 +23,27 @@ class _ButtomNavigatorState extends State<ButtomNavigator> {
       // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
-        items: <Widget>[
-          Icon(Icons.add, size: 30),
-          Icon(Icons.list, size: 30),
-          Icon(Icons.compare_arrows, size: 30),
+        items: const [
+          Icon(
+            Icons.add,
+            size: 30,
+            color: Colors.amber,
+          ),
+          Icon(
+            Icons.list,
+            size: 30,
+            color: Colors.amber,
+          ),
+          Icon(
+            Icons.compare_arrows,
+            size: 30,
+            color: Colors.amber,
+          ),
+          Icon(
+            Icons.api,
+            size: 30,
+            color: Colors.amber,
+          ),
         ],
         index: activeIndex,
         onTap: (index) {
